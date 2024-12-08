@@ -14,10 +14,16 @@ permissions:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    
     defaults:
       run:
+        shell: bash
         working-directory: ./example-app
     steps:
     - uses: actions/checkout@v4
@@ -43,6 +49,6 @@ jobs:
       with:
         path: /home/runner/work/iac-labs/example-app/.venv
         key: ${{ runner.os }}-venv
-        
+        needs: some-other-job
         
      
